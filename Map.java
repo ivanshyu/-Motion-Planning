@@ -4,14 +4,13 @@ import java.io.*;
 import java.lang.*;
 public class Map{
     private int [][]map;
-    public Map(){
+    public void setObstacle(Obstacle []o){
         map=new int [128][128];
         for(int i=0;i<128;i++){
             for(int j=0;j<128;j++)
                 map[i][j]=254;
         }
-    }
-    public void setObstacle(Obstacle []o){
+
         for(int i=0;i<o.length;i++){
             for(int j=0;j<o[i].pnumber();j++){
                 draw(o[i].poly_x(j),o[i].poly_y(j));

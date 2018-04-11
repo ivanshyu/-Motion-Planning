@@ -28,6 +28,24 @@ public class Robot {
         fr.close();
         return start();
     }
+    public void angle_poly(int poly,double angle){
+        for(int i=0;i<vnumber(poly);i++){
+            double hold=Math.cos(angle)*poly_x[poly][i]-Math.sin(angle)*poly_y[poly][i];   //x'=cosx - sinx + dx
+            double hold2=Math.sin(angle)*poly_x[poly][i]+Math.cos(angle)*poly_y[poly][i];   //x'=cosx - sinx + dx
+            System.out.println(poly_x[poly][i]+","+poly_y[poly][i]);
+            System.out.println(hold+","+hold2);
+            poly_x[poly][i]=(int)hold;
+            poly_y[poly][i]=(int)hold2;
+        }
+    }    
+    public void reset_poly(int poly,int x,int y){
+        for(int i=0;i<vnumber(poly);i++){
+            System.out.println(poly_x[poly][i]+","+poly_y[poly][i]);
+            poly_x[poly][i]+=x;
+            poly_y[poly][i]-=y;
+            System.out.println(poly_x[poly][i]+","+poly_y[poly][i]);
+        }
+    }
     public int rnumber(){
         System.out.println(robot_num);
         return robot_num;
