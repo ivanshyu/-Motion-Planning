@@ -49,18 +49,18 @@ public class Main extends JComponent implements MouseListener{
         System.out.println("Mouse Pressed at X: " + x + " - Y: " + y);
         for(int i=0;i<r.length;i++){
             for(int k=0;k<r[i].pnumber();k++){
-                int []px=r[i].poly_x(k);
-                int []py=r[i].poly_y(k);
+                double []px=r[i].poly_x(k);
+                double []py=r[i].poly_y(k);
                 int max_x=0,min_x=640,max_y=0,min_y=640;
                 for(int j=0;j<px.length;j++){
                     if(px[j]>max_x)
-                        max_x=px[j];
+                        max_x=(int)px[j];
                     if(px[j]<min_x)
-                        min_x=px[j];
+                        min_x=(int)px[j];
                     if(py[j]>max_y)
-                        max_y=py[j];
+                        max_y=(int)py[j];
                     if(py[j]<min_y)
-                        min_y=py[j];
+                        min_y=(int)py[j];
                 }
 
                 if(x>min_x && x< max_x && y>min_y && y<max_y){
@@ -79,18 +79,18 @@ public class Main extends JComponent implements MouseListener{
         if(find==false){
             for(int i=0;i<o.length;i++){
                 for(int k=0;k<o[i].pnumber();k++){
-                    int []px=o[i].poly_x(k);
-                    int []py=o[i].poly_y(k);
+                    double []px=o[i].poly_x(k);
+                    double []py=o[i].poly_y(k);
                     int max_x=0,min_x=640,max_y=0,min_y=640;
                     for(int j=0;j<px.length;j++){
                         if(px[j]>max_x)
-                            max_x=px[j];
+                            max_x=(int)px[j];
                         if(px[j]<min_x)
-                            min_x=px[j];
+                            min_x=(int)px[j];
                         if(py[j]>max_y)
-                            max_y=py[j];
+                            max_y=(int)py[j];
                         if(py[j]<min_y)
-                            min_y=py[j];
+                            min_y=(int)py[j];
                     }
 
                     if(x>min_x && x< max_x && y>min_y && y<max_y){
@@ -185,13 +185,25 @@ public class Main extends JComponent implements MouseListener{
                     g.setColor(Color.BLUE);
                 else
                     g.setColor(Color.GRAY);
-                g.fillPolygon(r[i].poly_x(j), r[i].poly_y(j),r[i].vnumber(j));
+                int[] polyx= new int[r[i].poly_x(j).length];
+                for (int k=0; k<polyx.length; ++k)
+                    polyx[k] = (int) r[i].poly_x(j)[k];
+                int[] polyy= new int[r[i].poly_y(j).length];
+                for (int k=0; k<polyy.length; ++k)
+                    polyy[k] = (int) r[i].poly_y(j)[k];
+                g.fillPolygon(polyx,polyy,r[i].vnumber(j));
             }
         }
         for(int i=0;i<onum;i++){
             for(int j=0;j<o[i].pnumber();j++){
                 g.setColor(Color.RED);
-                g.fillPolygon(o[i].poly_x(j), o[i].poly_y(j),o[i].vnumber(j));
+                int[] polyx= new int[o[i].poly_x(j).length];
+                for (int k=0; k<polyx.length; ++k)
+                    polyx[k] = (int) o[i].poly_x(j)[k];
+                int[] polyy= new int[o[i].poly_y(j).length];
+                for (int k=0; k<polyy.length; ++k)
+                    polyy[k] = (int) o[i].poly_y(j)[k];
+                g.fillPolygon(polyx,polyy,o[i].vnumber(j));
             }
         }
     }

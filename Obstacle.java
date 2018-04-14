@@ -8,8 +8,8 @@ public class Obstacle {
     private int obs_num=0;
     private int vertice_num=0;
     private int crtl_num=0;
-    private int [][]poly_x;      //after convert, x
-    private int [][]poly_y;      //after convert, y
+    private double [][]poly_x;      //after convert, x
+    private double [][]poly_y;      //after convert, y
     private double []config;
     public Obstacle[] pre_data() throws IOException{
         String line;
@@ -34,8 +34,8 @@ public class Obstacle {
                 double hold2=Math.sin(angle)*poly_x[j][i]+Math.cos(angle)*poly_y[j][i];   //x'=cosx - sinx + dx
                 System.out.println(poly_x[j][i]/5+","+ (600-poly_y[j][i])/5);
                 System.out.println(hold/5+","+(600-hold2)/5);
-                poly_x[j][i]=(int)hold;
-                poly_y[j][i]=(int)hold2;
+                poly_x[j][i]=hold;
+                poly_y[j][i]=hold2;
             }
         }
     }    
@@ -60,20 +60,20 @@ public class Obstacle {
     public int vnumber(int poly){
         return poly_x[poly].length;
     }
-    public int[] poly_x(int poly){
+    public double[] poly_x(int poly){
         return poly_x[poly];
     }
-    public int[] poly_y(int poly){
+    public double[] poly_y(int poly){
         return poly_y[poly];
     }
     public void move_object(Obstacle []o){
         for(int i=0;i<obs_num;i++){
-            o[i].poly_x= new int [o[i].polygon_num][];
-            o[i].poly_y= new int [o[i].polygon_num][];
+            o[i].poly_x= new double [o[i].polygon_num][];
+            o[i].poly_y= new double [o[i].polygon_num][];
             o[i].poly2 = new int [o[i].polygon_num][20][2]; //dest point   note!!
             for(int j=0;j<o[i].polygon_num;j++){
-                o[i].poly_x[j]=new int[o[i].poly[j].length];
-                o[i].poly_y[j]=new int[o[i].poly[j].length];
+                o[i].poly_x[j]=new double[o[i].poly[j].length];
+                o[i].poly_y[j]=new double[o[i].poly[j].length];
                 //System.out.println(o[i].polygon_num);
                 for(int k=0;k<o[i].poly[j].length;k++){
                     //System.out.println(o[i].poly[j].length);

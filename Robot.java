@@ -10,12 +10,12 @@ public class Robot {
     private int vertice_num;
     private int crtl_num=0;
     private double [][]crtl;
-    private int init_crtl_x[];
-    private int init_crtl_y[];
-    private int goal_crtl_x[];
-    private int goal_crtl_y[];
-    private int [][]poly_x;      //after convert, x
-    private int [][]poly_y;      //after convert, y
+    private double init_crtl_x[];
+    private double init_crtl_y[];
+    private double goal_crtl_x[];
+    private double goal_crtl_y[];
+    private double [][]poly_x;      //after convert, x
+    private double [][]poly_y;      //after convert, y
     public Robot[] pre_data() throws IOException{
         String line;
         int i = 0;
@@ -74,24 +74,24 @@ public class Robot {
     public int vnumber(int poly){
         return poly_x[poly].length;
     }
-    public int[] poly_x(int poly){
+    public double[] poly_x(int poly){
         return poly_x[poly];
     }
-    public int[] poly_y(int poly){
+    public double[] poly_y(int poly){
         return poly_y[poly];
     }
     public void move_object(Robot []r){
         for(int i=0;i<robot_num;i++){
             r[i].poly2 = new int[r[i].polygon_num][20][2]; //dest point   note!!
-            r[i].poly_x= new int [r[i].polygon_num][];
-            r[i].poly_y= new int [r[i].polygon_num][];
-            r[i].init_crtl_x=new int [r[i].crtl.length]; 
-            r[i].init_crtl_y=new int [r[i].crtl.length];
-            r[i].goal_crtl_x=new int [r[i].crtl.length];
-            r[i].goal_crtl_y=new int [r[i].crtl.length];
+            r[i].poly_x= new double [r[i].polygon_num][];
+            r[i].poly_y= new double [r[i].polygon_num][];
+            r[i].init_crtl_x=new double [r[i].crtl.length]; 
+            r[i].init_crtl_y=new double [r[i].crtl.length];
+            r[i].goal_crtl_x=new double [r[i].crtl.length];
+            r[i].goal_crtl_y=new double [r[i].crtl.length];
             for(int j=0;j<r[i].polygon_num;j++){
-                r[i].poly_x[j]=new int[r[i].poly[j%(r[i].polygon_num/2)].length];
-                r[i].poly_y[j]=new int[r[i].poly[j%(r[i].polygon_num/2)].length];
+                r[i].poly_x[j]=new double[r[i].poly[j%(r[i].polygon_num/2)].length];
+                r[i].poly_y[j]=new double[r[i].poly[j%(r[i].polygon_num/2)].length];
                 //System.out.println(r[i].polygon_num);
                 int l=0;  //control init or goal
                 if(j>=r[i].polygon_num/2) l=1;
@@ -101,8 +101,8 @@ public class Robot {
                     double hold2=Math.sin(r[i].config[l][2])*r[i].poly[j%(r[i].polygon_num/2)][k][0]+Math.cos(r[i].config[l][2])*r[i].poly[j%(r[i].polygon_num/2)][k][1]+r[i].config[l][1];   //y'=sinx + cosy + dy
                     r[i].poly2[j][k][1]=(int)hold2;
                     //System.out.println(r[i].poly[j].length);
-                    r[i].poly_x[j][k]=(int)hold*5;
-                    r[i].poly_y[j][k]=640-(int)hold2*5;
+                    r[i].poly_x[j][k]=hold*5;
+                    r[i].poly_y[j][k]=640-hold2*5;
                     //System.out.println(i+" "+j+" "+l+" "+k+" "+r[i].poly_x[j][k]/5+", "+ (600-r[i].poly_y[j][k])/5);
                     //System.out.println(r[i].poly[j%(r[i].polygon_num/2)][k][0]+", "+r[i].poly[j%(r[i].polygon_num/2)][k][1]);
                     //System.out.println(l+" "+r[i].config[l][0]+" "+r[i].config[l][1]+" "+r[i].config[l][2]);
@@ -112,12 +112,12 @@ public class Robot {
                         double hold_crtlx=Math.cos(r[i].config[l][2])*r[i].crtl[n][0]-Math.sin(r[i].config[l][2])*r[i].crtl[n][1]+r[i].config[l][0];
                         double hold_crtlY=Math.sin(r[i].config[l][2])*r[i].crtl[n][0]+Math.cos(r[i].config[l][2])*r[i].crtl[n][1]+r[i].config[l][1];
                         if(j==0){
-                            r[i].init_crtl_x[n]=(int)hold_crtlx;
-                            r[i].init_crtl_y[n]=(int)hold_crtlY;
+                            r[i].init_crtl_x[n]=hold_crtlx;
+                            r[i].init_crtl_y[n]=hold_crtlY;
                         }
                         else{
-                            r[i].goal_crtl_x[n]=(int)hold_crtlx;
-                            r[i].goal_crtl_y[n]=(int)hold_crtlY;
+                            r[i].goal_crtl_x[n]=hold_crtlx;
+                            r[i].goal_crtl_y[n]=hold_crtlY;
                         }
                         System.out.println(i+"!!!!!");
                         System.out.println(hold_crtlx+" "+hold_crtlY);

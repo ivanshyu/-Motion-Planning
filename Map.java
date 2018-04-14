@@ -17,14 +17,14 @@ public class Map{
             }
         }
     }
-    public void draw(int []x , int []y){
+    public void draw(double []x , double []y){
         int []org_x=new int[x.length];
         int []org_y=new int[y.length];
         int [][]record=new int[1000][2];
         int max=0,min=128,count=0;
         for(int i=0;i<x.length;i++){
-            org_x[i]=x[i]/5;
-            org_y[i]=(640-y[i])/5;
+            org_x[i]=(int)x[i]/5;
+            org_y[i]=(int)(640-y[i])/5;
             if(org_x[i]>max)
                 max=org_x[i];
             if(org_x[i]<min)
