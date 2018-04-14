@@ -181,7 +181,10 @@ public class Main extends JComponent implements MouseListener{
         super.paintComponent(g);
         for(int i=0;i<rnum;i++){
             for(int j=0;j<r[i].pnumber();j++){
-                g.setColor(Color.BLUE);
+                if(j<r[i].pnumber()/2)
+                    g.setColor(Color.BLUE);
+                else
+                    g.setColor(Color.GRAY);
                 g.fillPolygon(r[i].poly_x(j), r[i].poly_y(j),r[i].vnumber(j));
             }
         }
