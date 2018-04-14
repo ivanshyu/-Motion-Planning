@@ -32,18 +32,18 @@ public class Robot {
         for(int i=0;i<vnumber(poly);i++){
             double hold=Math.cos(angle)*poly_x[poly][i]-Math.sin(angle)*poly_y[poly][i];   //x'=cosx - sinx + dx
             double hold2=Math.sin(angle)*poly_x[poly][i]+Math.cos(angle)*poly_y[poly][i];   //x'=cosx - sinx + dx
-            System.out.println(poly_x[poly][i]+","+poly_y[poly][i]);
-            System.out.println(hold+","+hold2);
+            System.out.println(poly_x[poly][i]/5+","+ (600-poly_y[poly][i])/5);
+            System.out.println(hold/5+","+(600-hold2)/5);
             poly_x[poly][i]=(int)hold;
             poly_y[poly][i]=(int)hold2;
         }
     }    
     public void reset_poly(int poly,int x,int y){
         for(int i=0;i<vnumber(poly);i++){
-            System.out.println(poly_x[poly][i]+","+poly_y[poly][i]);
+            System.out.println(poly_x[poly][i]/5+","+(600-poly_y[poly][i])/5);
             poly_x[poly][i]+=x;
             poly_y[poly][i]-=y;
-            System.out.println(poly_x[poly][i]+","+poly_y[poly][i]);
+            System.out.println(poly_x[poly][i]/5+","+(600-poly_y[poly][i])/5);
         }
     }
     public int rnumber(){
@@ -68,24 +68,27 @@ public class Robot {
             r[i].poly_x= new int [r[i].polygon_num][];
             r[i].poly_y= new int [r[i].polygon_num][];
             for(int j=0;j<r[i].polygon_num;j++){
-                r[i].poly_x[j]=new int[r[i].poly[j].length];
-                r[i].poly_y[j]=new int[r[i].poly[j].length];
+                r[i].poly_x[j]=new int[r[i].poly[j%(r[i].polygon_num/2)].length];
+                r[i].poly_y[j]=new int[r[i].poly[j%(r[i].polygon_num/2)].length];
                 //System.out.println(r[i].polygon_num);
-                for(int k=0;k<r[i].poly[j].length;k++){
-                    //System.out.println(r[i].poly[j].length);
-                    double hold=Math.cos(r[i].config[0][2])*r[i].poly[j][k][0]-Math.sin(r[i].config[0][2])*r[i].poly[j][k][1]+r[i].config[0][0];   //x'=cosx - sinx + dx
+                int l=0;  //control init or goal
+                if(j>=r[i].polygon_num/2) l=1;
+                for(int k=0;k<r[i].poly[j%(r[i].polygon_num/2)].length;k++){
+                    double hold=Math.cos(r[i].config[l][2])*r[i].poly[j%(r[i].polygon_num/2)][k][0]-Math.sin(r[i].config[l][2])*r[i].poly[j%(r[i].polygon_num/2)][k][1]+r[i].config[l][0];   //x'=cosx - sinx + dx
                     r[i].poly2[j][k][0]=(int)hold;
-                    double hold2=Math.sin(r[i].config[0][2])*r[i].poly[j][k][0]+Math.cos(r[i].config[0][2])*r[i].poly[j][k][1]+r[i].config[0][1];   //y'=sinx + cosy + dy
+                    double hold2=Math.sin(r[i].config[l][2])*r[i].poly[j%(r[i].polygon_num/2)][k][0]+Math.cos(r[i].config[l][2])*r[i].poly[j%(r[i].polygon_num/2)][k][1]+r[i].config[l][1];   //y'=sinx + cosy + dy
                     r[i].poly2[j][k][1]=(int)hold2;
                     //System.out.println(r[i].poly[j].length);
                     r[i].poly_x[j][k]=(int)hold*5;
                     r[i].poly_y[j][k]=640-(int)hold2*5;
-                    //System.out.println(r[i].poly_x[j][k]+", "+r[i].poly_y[j][k]);
-                    System.out.println(r[i].poly2[j][k][0]+", "+r[i].poly2[j][k][1]);
+                    //System.out.println(i+" "+j+" "+l+" "+k+" "+r[i].poly_x[j][k]/5+", "+ (600-r[i].poly_y[j][k])/5);
+                    //System.out.println(r[i].poly[j%(r[i].polygon_num/2)][k][0]+", "+r[i].poly[j%(r[i].polygon_num/2)][k][1]);
+                    //System.out.println(l+" "+r[i].config[l][0]+" "+r[i].config[l][1]+" "+r[i].config[l][2]);
                 }
             }
         }
     }
+
     public Robot[] start() throws IOException{
         String line; 
         int hold=0;
@@ -98,7 +101,7 @@ public class Robot {
         robot_num=hold;
         Robot[] r=new Robot[robot_num];        
         for(int i=0;i<robot_num;i++){//           i=2
-            r[i]=new Robot();
+            r[i]=new Robot();  
             //r[i].robot_num=robot_num;
             line = br.readLine();  //number of polygons
             try{  //string to int
@@ -122,11 +125,11 @@ public class Robot {
                         r[i].poly[j][l][k]=Double.parseDouble(token[k]); 
                         //System.out.println(r[i].poly[j][l][k]);
                     }
-            
+
 
                 }
             }
-                        r[i].config = new double[2][3];
+            r[i].config = new double[2][3];
             for(int j=0;j<2;j++){  //init & goal's config
                 line = br.readLine();
                 String[] token = line.split(" ");
@@ -138,7 +141,7 @@ public class Robot {
                         double rad=Double.parseDouble(token[k]);
                         r[i].config[j][2] = Math.toRadians(rad);
                     }
-        //            System.out.println(r[i].config[j][k]);
+                              //  System.out.println(r[i].config[j][k]);
                 }
 
             }
@@ -156,10 +159,12 @@ public class Robot {
                 String[] token = line.split(" ");
                 for (int k = 0; k < token.length; k++){   
                     r[i].crtl[j][k]=Double.parseDouble(token[k]); 
-                //    System.out.println(r[i].crtl[j][k]);
+                    //    System.out.println(r[i].crtl[j][k]);
                 }
             }
-           // System.out.println("end"); 
+            polygon_num*=2;
+            r[i].polygon_num*=2;
+            // System.out.println("end"); 
 
         }
         //System.out.println("======================");

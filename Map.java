@@ -67,7 +67,7 @@ public class Map{
             for(int j=hold[1];j<hold[0];j++)
                 map[i][j]=255;
         }
-        for(int j=0;j<128;j++){
+        /*for(int j=0;j<128;j++){
             for(int i=0;i<128;i++){
                 if(map[i][j]==255){
                     System.out.print('*');
@@ -76,7 +76,7 @@ public class Map{
                     System.out.print(' ');
             }
             System.out.println();
-        }
+        }*/
         
     }
 
