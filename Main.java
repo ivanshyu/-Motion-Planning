@@ -139,9 +139,9 @@ public class Main extends JComponent implements MouseListener{
                 }
 
             }
-            find=false;
+            find=false; 
+            repaint();
         }
-        repaint();
     }
 
     private static void createAndShowGUI() {
@@ -167,6 +167,7 @@ public class Main extends JComponent implements MouseListener{
 
        
         m.setObstacle(o);
+        m.init_field(r,o);
 
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

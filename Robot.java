@@ -42,18 +42,18 @@ public class Robot {
             for(int i=0;i<vnumber(j);i++){
                 double hold=Math.cos(angle)*poly_x[j][i]-Math.sin(angle)*poly_y[j][i];   //x'=cosx - sinx + dx
                 double hold2=Math.sin(angle)*poly_x[j][i]+Math.cos(angle)*poly_y[j][i];   //x'=cosx - sinx + dx
-                System.out.println(poly_x[j][i]/5+","+ (600-poly_y[j][i])/5);
-                System.out.println(hold/5+","+(600-hold2)/5);
+                System.out.println(poly_x[j][i]/5+","+ (640-poly_y[j][i])/5);
+                System.out.println(hold/5+","+(640-hold2)/5);
                 poly_x[j][i]=hold;
                 poly_y[j][i]=hold2;
-                if(j==limit-1){
+                if(j==limit-1 && i==vnumber(j)-1){
                     if(limit!=pnumber()){
                         for(int k=0;k<init_crtl_x.length;k++){
                             double holdc=Math.cos(angle)*init_crtl_x[k]-Math.sin(angle)*init_crtl_y[k];   //x'=cosx - sinx + dx
                             double holdc2=Math.sin(angle)*init_crtl_x[k]+Math.cos(angle)*init_crtl_y[k];   //x'=cosx - sinx + dx
                             init_crtl_x[k]=holdc;
                             init_crtl_y[k]=holdc2;
-                            System.out.println(init_crtl_x[k]+" "+init_crtl_y[k]);
+                            System.out.println(init_crtl_x[k]+" "+init_crtl_y[k]+"!");
                         }
                     }
                     else{
@@ -62,7 +62,7 @@ public class Robot {
                             double holdc2=Math.sin(angle)*goal_crtl_x[k]+Math.cos(angle)*goal_crtl_y[k];   //x'=cosx - sinx + dx
                             goal_crtl_x[k]=holdc;
                             goal_crtl_y[k]=holdc2;
-                            System.out.println(goal_crtl_x[k]+" "+goal_crtl_y[k]);
+                            System.out.println(goal_crtl_x[k]+" "+goal_crtl_y[k]+"!");
                         }
                     }
 
@@ -71,21 +71,46 @@ public class Robot {
 
         }
     }    
-    public void reset_poly(int poly,int x,int y){
+    public void reset_poly(int poly,double x,double y){
         int j=0,limit=pnumber()/2;
         if(poly>=pnumber()/2){ 
             j=pnumber()/2;
             limit*=2;
+            for(int i=0;i<goal_crtl_x.length;i++){
+                goal_crtl_x[i]+=x/5;
+                goal_crtl_y[i]+=y/5;
+                System.out.println(goal_crtl_x[i]+" "+goal_crtl_y[i]+"!");
+            }
+        }
+        else{
+            for(int i=0;i<init_crtl_x.length;i++){
+                init_crtl_x[i]+=x/5;
+                init_crtl_y[i]+=y/5;
+                System.out.println(init_crtl_x[i]+" "+init_crtl_y[i]+"!");
+            }
         }
         for(;j<limit;j++){
             for(int i=0;i<vnumber(j);i++){
-                System.out.println(poly_x[j][i]/5+","+(600-poly_y[j][i])/5);
+                System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
                 poly_x[j][i]+=x;
                 poly_y[j][i]-=y;
-                System.out.println(poly_x[j][i]/5+","+(600-poly_y[j][i])/5);
+                System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
             }
         }
+        
     }
+    public double[] crtl_x(int type){
+        if(type==0)
+            return init_crtl_x;
+        else
+            return goal_crtl_x;
+    }
+    public double[] crtl_y(int type){
+        if(type==0)
+            return init_crtl_y;
+        else
+            return goal_crtl_y;
+    } 
     public int rnumber(){
         System.out.println(robot_num);
         return robot_num;

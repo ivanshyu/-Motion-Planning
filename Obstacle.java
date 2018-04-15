@@ -32,8 +32,8 @@ public class Obstacle {
             for(int i=0;i<vnumber(j);i++){
                 double hold=Math.cos(angle)*poly_x[j][i]-Math.sin(angle)*poly_y[j][i];   //x'=cosx - sinx + dx
                 double hold2=Math.sin(angle)*poly_x[j][i]+Math.cos(angle)*poly_y[j][i];   //x'=cosx - sinx + dx
-                System.out.println(poly_x[j][i]/5+","+ (600-poly_y[j][i])/5);
-                System.out.println(hold/5+","+(600-hold2)/5);
+                System.out.println(poly_x[j][i]/5+","+ (640-poly_y[j][i])/5);
+                System.out.println(hold/5+","+(640-hold2)/5);
                 poly_x[j][i]=hold;
                 poly_y[j][i]=hold2;
             }
@@ -42,10 +42,10 @@ public class Obstacle {
     public void reset_poly(int poly,int x,int y){
         for(int j=0;j<pnumber();j++){
             for(int i=0;i<vnumber(j);i++){
-                System.out.println(poly_x[j][i]/5+","+(600-poly_y[j][i])/5);
+                System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
                 poly_x[j][i]+=x;
                 poly_y[j][i]-=y;
-                System.out.println(poly_x[j][i]/5+","+(600-poly_y[j][i])/5);
+                System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
             }
         }
     }
@@ -81,8 +81,8 @@ public class Obstacle {
                     o[i].poly2[j][k][0]=(int)hold;
                     double hold2=Math.sin(o[i].config[2])*o[i].poly[j][k][0]+Math.cos(o[i].config[2])*o[i].poly[j][k][1]+o[i].config[1];   //y'=sinx + cosy + dy 
                     o[i].poly2[j][k][1]=(int)hold2;
-                    o[i].poly_x[j][k]=(int)hold*5;
-                    o[i].poly_y[j][k]=640-(int)hold2*5;
+                    o[i].poly_x[j][k]=hold*5;
+                    o[i].poly_y[j][k]=640-hold2*5;
                     //System.out.println(o[i].poly_x[j][k]+", "+o[i].poly_y[j][k]);
                     System.out.println(o[i].poly2[j][k][0]+", "+o[i].poly2[j][k][1]);
                 }

@@ -4,6 +4,21 @@ import java.io.*;
 import java.lang.*;
 public class Map{
     private int [][]map;
+    private int [][][][]field;
+    public void init_field(Robot []r,Obstacle []o){
+        field=new int [r.length][][][];
+        for(int i=0;i<r.length;i++){
+            field[i]=new int [r[i].crtl_x(0).length][128][128];
+            for(int j=0;j<r[i].crtl_x(0).length;j++){
+                for(int k=0;k<128;k++){
+                    for(int l=0;l<128;l++){
+                        field[i][j][k][l]=map[k][l];
+                    }
+                }
+                
+            }
+        }
+    }
     public void setObstacle(Obstacle []o){
         map=new int [128][128];
         for(int i=0;i<128;i++){
@@ -30,7 +45,7 @@ public class Map{
             if(org_x[i]<min)
                 min=org_x[i];
         }
-        System.out.println(max+"!!!!!!!!!!!!"+min);
+        //System.out.println(max+"!!!!!!!!!!!!"+min);
         for(int i=0;i<x.length;i++){
             double d;
             double dx,dy;
@@ -61,9 +76,6 @@ public class Map{
                     hold[1]=record[j][1];
                 //System.out.println(record[j][0]+" "+i);
             }
-            //h=hold[0]-hold[1];
-            //System.out.print(i+" "+hold[1]+" ");
-            //System.out.println(hold[0]);
             for(int j=hold[1];j<hold[0];j++)
                 map[i][j]=255;
         }
