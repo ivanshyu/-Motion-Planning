@@ -15,8 +15,18 @@ public class Map{
                         field[i][j][k][l]=map[k][l];
                     }
                 }
-                
+                build_field(i,r[i],o);
             }
+        }
+    }
+    public void build_field(int num, Robot r,Obstacle []o){
+        double []holdx=new double[r.crtl_x(1).length];
+        double []holdy=new double[r.crtl_y(1).length];
+        System.arraycopy( r.crtl_x(1), 0, holdx, 0, holdx.length ); 
+        System.arraycopy( r.crtl_y(1), 0, holdy, 0, holdy.length );
+        for(int i=0;i<holdx.length;i++){
+            field[num][i][(int)holdx[i]][(int)holdy[i]]=0;
+
         }
     }
     public void setObstacle(Obstacle []o){
