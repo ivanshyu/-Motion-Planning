@@ -124,6 +124,7 @@ public class Main extends JComponent implements MouseListener{
                     o[order1].reset_poly(order2,(x-press_x),(press_y-y));
                     m.setObstacle(o);
                 }
+                m.init_field(r,o);
             }
             else if(e.getModifiers()==4){
                 double z1=Math.sqrt(press_x*press_x+press_y*press_y);
@@ -137,6 +138,7 @@ public class Main extends JComponent implements MouseListener{
                     o[order1].angle_poly(order2,(angle2-angle1)/75);
                     m.setObstacle(o);
                 }
+                m.init_field(r,o);
 
             }
             find=false; 
