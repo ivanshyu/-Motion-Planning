@@ -4,9 +4,10 @@ import data.Map;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.event.MouseMotionListener;
 import javax.swing.*;
 import javax.swing.event.*;
-public class Main extends JComponent implements MouseListener{
+public class Main extends JComponent implements MouseMotionListener{
     static Robot []r;
     static Obstacle []o;
     static Map m=new Map();
@@ -14,67 +15,64 @@ public class Main extends JComponent implements MouseListener{
     static int rpnum,opnum;
     int robot_or_obstacle,order1,order2;
     int press_x,press_y;
+    int count;
     boolean find=false;
 
     public Main(){
         //setTitle("Motion Plannig GUI");
-        addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseMoved(MouseEvent e) {
         int x = e.getX();
         int y = 600-e.getY();
-        System.out.println("Mouse Clicked at X: " + x + " - Y: " + y);
+        find=false;
+        count=0;
+        press_x=0;
+        press_y=0;
+        //System.out.println("Mouse Clicked at X: " + x + " - Y: " + y);
     }
-
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseDragged(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        //System.out.println("Mouse Entered frame at X: " + x + " - Y: " + y);
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        //System.out.println("Mouse Exited frame at X: " + x + " - Y: " + y);
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
+        //count++;    
         System.out.println("Mouse Pressed at X: " + x + " - Y: " + y);
-        for(int i=0;i<r.length;i++){
-            for(int k=0;k<r[i].pnumber();k++){
-                double []px=r[i].poly_x(k);
-                double []py=r[i].poly_y(k);
-                int max_x=0,min_x=640,max_y=0,min_y=640;
-                for(int j=0;j<px.length;j++){
-                    if(px[j]>max_x)
-                        max_x=(int)px[j];
-                    if(px[j]<min_x)
-                        min_x=(int)px[j];
-                    if(py[j]>max_y)
-                        max_y=(int)py[j];
-                    if(py[j]<min_y)
-                        min_y=(int)py[j];
-                }
+        //if(count%2!=0){
+        if(find==false){    
+            for(int i=0;i<r.length;i++){
+                for(int k=0;k<r[i].pnumber();k++){
+                    double []px=r[i].poly_x(k);
+                    double []py=r[i].poly_y(k);
+                    int max_x=0,min_x=640,max_y=0,min_y=640;
+                    for(int j=0;j<px.length;j++){
+                        if(px[j]>max_x)
+                            max_x=(int)px[j];
+                        if(px[j]<min_x)
+                            min_x=(int)px[j];
+                        if(py[j]>max_y)
+                            max_y=(int)py[j];
+                        if(py[j]<min_y)
+                            min_y=(int)py[j];
+                    }
 
-                if(x>min_x && x< max_x && y>min_y && y<max_y){
-                    System.out.println("in the polygon");
-                    robot_or_obstacle=0;
-                    order1=i;
-                    order2=k;
-                    press_x=x;
-                    press_y=y;
-                    find=true;
+                    if(x>min_x && x< max_x && y>min_y && y<max_y){
+                        System.out.println("in the polygon");
+                        robot_or_obstacle=0;
+                        order1=i;
+                        order2=k;
+                        press_x=x;
+                        press_y=y;
+                        find=true;
+                        break;
+                    }
+                }
+                if(find==true){
+                    System.out.println("find!!!!!!!!");
                     break;
                 }
             }
-            if(find==true) break;
         }
         if(find==false){
             for(int i=0;i<o.length;i++){
@@ -104,19 +102,17 @@ public class Main extends JComponent implements MouseListener{
                         break;
                     }
                 }
-                if(find==true) break;
+                if(find==true){
+                    System.out.println("find!!!!!!!!!");
+                    break;
+                }
             }
+            //    }
         }
-
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        System.out.println("Mouse Released at X: " + x + " - Y: " + y);
         if(find==true){
+            x = e.getX();
+            y = e.getY();
+            System.out.println("Mouse Released at X: " + x + " - Y: " + y);
             if(e.getModifiers()==16){
                 if(robot_or_obstacle==0)
                     r[order1].reset_poly(order2,(x-press_x),(press_y-y));
@@ -141,11 +137,12 @@ public class Main extends JComponent implements MouseListener{
                 m.init_field(r,o);
 
             }
-            find=false; 
+        //find=false; 
             repaint();
+            press_x=x;
+            press_y=y;
         }
     }
-
     private static void createAndShowGUI() {
         JFrame f = new JFrame();
         f.getContentPane().add(new Main());
@@ -167,7 +164,7 @@ public class Main extends JComponent implements MouseListener{
         onum=obs.onumber();
         obs.move_object(o);
 
-       
+
         m.setObstacle(o);
         m.init_field(r,o);
 
