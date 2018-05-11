@@ -69,6 +69,16 @@ public class Map{
 
         }
     }
+    public void printField(){
+        for(int i=0;i<field[0].length;i++){
+            for(int j=0;j<128;j++){
+                for(int k=0;k<128;k++){
+                    System.out.print(field[0][0][j][k]+" ");
+                }
+                System.out.println();
+            }
+        }
+    }
     public void setObstacle(Obstacle []o){
         map=new int [128][128];
         for(int i=0;i<128;i++){

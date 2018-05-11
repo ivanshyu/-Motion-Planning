@@ -206,6 +206,7 @@ public class Main extends JComponent implements MouseMotionListener{
                 g.fillPolygon(polyx,polyy,o[i].vnumber(j));
             }
         }
+        //m.printField();
     }
 }
 //g.drawLine(-100,-100,0,0);
