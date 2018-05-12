@@ -1,19 +1,26 @@
 package data;
 import data.*;
 import java.util.*;
-public class Planning(){
+public class Planning{
     private int [][]totol_field;
     public void addField(Map m){
-        [][]totol_field = new int [128][128];
+        int [][]totol_field = new int [128][128];
         for(int i=0;i<128;i++){
             for(int j=0;j<128;j++){
-                for(int k=0;k=field[0].length;k++)
-                    totol_field[i][j]+=field[0][k][i][j];
+                for(int k=0;k<m.field[0].length;k++)
+                    totol_field[i][j]+=m.field[0][k][i][j];
             }
         }
     }
-    public void start(Robor r){
-        LinkedList<Integer> []tree = new LinkedList<Integer>[256];
-        tree[0].add()
+    public void start(){
+        PriorityQueue<Tree> []p = new PriorityQueue[256];
+        p[0]=new PriorityQueue();
+        Tree a=new Tree(0,0,0);
+        p[0].offer(a);
+        Tree b=new Tree(1,1,1);
+        p[0].offer(b);
+        Tree c=new Tree(2,2,2);
+        p[0].offer(c);
+        System.out.println(((Tree)p[0].peek()).get_value());
     }
 }

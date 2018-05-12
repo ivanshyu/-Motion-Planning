@@ -1,6 +1,7 @@
 import data.Robot;
 import data.Obstacle;
 import data.Map;
+import data.Planning;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,6 +12,7 @@ public class Main extends JComponent implements MouseMotionListener{
     static Robot []r;
     static Obstacle []o;
     static Map m=new Map();
+    static Planning p = new Planning();
     static int rnum,onum;
     static int rpnum,opnum;
     int robot_or_obstacle,order1,order2;
@@ -168,6 +170,7 @@ public class Main extends JComponent implements MouseMotionListener{
         m.setObstacle(o);
         m.init_field(r,o);
 
+        p.start();
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
