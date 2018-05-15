@@ -9,6 +9,7 @@ public class Robot {
     private int robot_num=0;
     private int vertice_num;
     private int crtl_num=0;
+    private double angle;
     private double [][]crtl;
     private double init_crtl_x[];
     private double init_crtl_y[];
@@ -104,6 +105,12 @@ public class Robot {
             return init_crtl_x;
         else
             return goal_crtl_x;
+    }
+    public double get_angle(){
+        return angle;
+    }
+    public void set_angle(double angle1){
+        angle=angle1;
     }
     public double[] crtl_y(int type){
         if(type==0)
@@ -226,6 +233,7 @@ public class Robot {
                     }
                     else{
                         double rad=Double.parseDouble(token[k]);
+                        r[i].set_angle(rad);
                         r[i].config[j][2] = Math.toRadians(rad);
                     }
                     //  System.out.println(r[i].config[j][k]);

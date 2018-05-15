@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 public class Map{
     private int [][]map;
-    private int [][][][]field;
+    public int [][][][]field;
     public void init_field(Robot []r,Obstacle []o){
         field=new int [r.length][][][];
         for(int i=0;i<r.length;i++){
@@ -92,7 +92,7 @@ public class Map{
             }
         }
     }
-    public void draw(double []x , double []y){
+    public void draw(double []x , double []y){  //fill 255 in the obstacles.
         int []org_x=new int[x.length];
         int []org_y=new int[y.length];
         int [][]record=new int[1000][2];

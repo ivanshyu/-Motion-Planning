@@ -1,6 +1,7 @@
 import data.Robot;
 import data.Obstacle;
 import data.Map;
+import data.Planning;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,6 +12,7 @@ public class Main extends JComponent implements MouseMotionListener{
     static Robot []r;
     static Obstacle []o;
     static Map m=new Map();
+    static Planning p = new Planning();
     static int rnum,onum;
     static int rpnum,opnum;
     int robot_or_obstacle,order1,order2;
@@ -127,7 +129,7 @@ public class Main extends JComponent implements MouseMotionListener{
                 double angle1=(Math.asin(press_y/z1)/Math.PI*180);
                 double z2=Math.sqrt(x*x+y*y);
                 double angle2=(Math.asin(y/z2)/Math.PI*180);
-                System.out.println(angle2-angle1);
+                System.out.println(Math.toDegrees(angle2-angle1));
                 if(robot_or_obstacle==0)
                     r[order1].angle_poly(order2,(angle2-angle1)/75);
                 else{
@@ -168,6 +170,8 @@ public class Main extends JComponent implements MouseMotionListener{
         m.setObstacle(o);
         m.init_field(r,o);
 
+        p.addField(m);
+        p.start(r[0],m);
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
