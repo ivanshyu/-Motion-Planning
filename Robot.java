@@ -9,7 +9,8 @@ public class Robot {
     private int robot_num=0;
     private int vertice_num;
     private int crtl_num=0;
-    private double angle;
+    private double init_angle;
+    private double goal_angle;
     private double [][]crtl;
     private double init_crtl_x[];
     private double init_crtl_y[];
@@ -36,15 +37,25 @@ public class Robot {
     public void angle_poly(int poly,double angle){
         int j=0,limit=pnumber()/2;
         if(poly>=pnumber()/2){ 
+            set_goal_angle(Math.toDegrees(angle)+get_goal_angle());
+            System.out.println(get_goal_angle());
+            if(get_goal_angle()<0) set_goal_angle(360+get_goal_angle());
+            else if(get_goal_angle()>360) set_goal_angle(get_goal_angle()-360);
             j=pnumber()/2;
             limit*=2;
+        }
+        else{
+            set_angle(Math.toDegrees(angle)+get_angle());
+            System.out.println(get_angle());
+            if(get_angle()<0) set_angle(360+get_angle());
+            else if(get_angle()>360) set_angle(get_angle()-360);
         }
         for(;j<limit;j++){
             for(int i=0;i<vnumber(j);i++){
                 double hold=Math.cos(angle)*poly_x[j][i]-Math.sin(angle)*poly_y[j][i];   //x'=cosx - sinx + dx
                 double hold2=Math.sin(angle)*poly_x[j][i]+Math.cos(angle)*poly_y[j][i];   //x'=cosx - sinx + dx
                 System.out.println(poly_x[j][i]/5+","+ (640-poly_y[j][i])/5);
-                System.out.println(hold/5+","+(640-hold2)/5);
+                //System.out.println(hold/5+","+(640-hold2)/5);
                 poly_x[j][i]=hold;
                 poly_y[j][i]=hold2;
                 if(j==limit-1 && i==vnumber(j)-1){
@@ -77,6 +88,8 @@ public class Robot {
         if(poly>=pnumber()/2){ 
             j=pnumber()/2;
             limit*=2;
+            config[1][0]+=x/5;
+            config[1][1]+=y/5;
             for(int i=0;i<goal_crtl_x.length;i++){
                 goal_crtl_x[i]+=x/5;
                 goal_crtl_y[i]+=y/5;
@@ -84,18 +97,22 @@ public class Robot {
             }
         }
         else{
+            config[0][0]+=x/5;
+            config[0][1]+=y/5;
             for(int i=0;i<init_crtl_x.length;i++){
                 init_crtl_x[i]+=x/5;
                 init_crtl_y[i]+=y/5;
                 System.out.println(init_crtl_x[i]+" "+init_crtl_y[i]+"!");
             }
         }
+        for(int i=0;i<2;i++)
+            System.out.println("config is "+config[i][0]+" "+config[i][1]);
         for(;j<limit;j++){
             for(int i=0;i<vnumber(j);i++){
-                System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
+                //System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
                 poly_x[j][i]+=x;
                 poly_y[j][i]-=y;
-                System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
+                //System.out.println(poly_x[j][i]/5+","+(640-poly_y[j][i])/5);
             }
         }
         
@@ -107,11 +124,20 @@ public class Robot {
             return goal_crtl_x;
     }
     public double get_angle(){
-        return angle;
+        return init_angle;
     }
+    
     public void set_angle(double angle1){
-        angle=angle1;
+        init_angle=angle1;
     }
+    public double get_goal_angle(){
+        return goal_angle;
+    }
+    
+    public void set_goal_angle(double angle1){
+        goal_angle=angle1;
+    }
+    
     public double[] crtl_y(int type){
         if(type==0)
             return init_crtl_y;
@@ -232,9 +258,18 @@ public class Robot {
                         r[i].config[j][k]=Double.parseDouble(token[k]); 
                     }
                     else{
+                        if(j==0){
                         double rad=Double.parseDouble(token[k]);
                         r[i].set_angle(rad);
+                        System.out.println(r[i].get_angle());
                         r[i].config[j][2] = Math.toRadians(rad);
+                        }
+                        else{
+                        double rad=Double.parseDouble(token[k]);
+                        r[i].set_goal_angle(rad);
+                        System.out.println(r[i].get_goal_angle());
+                        r[i].config[j][2] = Math.toRadians(rad);
+                        }
                     }
                     //  System.out.println(r[i].config[j][k]);
                 }
@@ -254,7 +289,7 @@ public class Robot {
                 String[] token = line.split(" ");
                 for (int k = 0; k < token.length; k++){   
                     r[i].crtl[j][k]=Double.parseDouble(token[k]); 
-                    //    System.out.println(r[i].crtl[j][k]);
+                    System.out.println(r[i].crtl[j][k]);
                 }
             }
             polygon_num*=2;

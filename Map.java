@@ -36,7 +36,7 @@ public class Map{
                 y_queue[j] = new LinkedList<Integer>();
             }
             x_queue[0].offer((int)holdx[i]);
-            y_queue[0].offer((int)holdy[i]);
+            y_queue[0].offer(128-(int)holdy[i]);
             for(int value=0;value<253;value++){         //potential field value
                 for(;x_queue[value].peek()!=null;){  //queue[i]!=null
                     int x = x_queue[value].poll();   //x & y are position

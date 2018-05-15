@@ -28,7 +28,7 @@ public class Main extends JComponent implements MouseMotionListener{
     @Override
     public void mouseMoved(MouseEvent e) {
         int x = e.getX();
-        int y = 600-e.getY();
+        int y = 640-e.getY();
         find=false;
         count=0;
         press_x=0;
@@ -126,14 +126,15 @@ public class Main extends JComponent implements MouseMotionListener{
             }
             else if(e.getModifiers()==4){
                 double z1=Math.sqrt(press_x*press_x+press_y*press_y);
-                double angle1=(Math.asin(press_y/z1)/Math.PI*180);
+                double angle1=(Math.asin(press_y/z1));
                 double z2=Math.sqrt(x*x+y*y);
-                double angle2=(Math.asin(y/z2)/Math.PI*180);
-                System.out.println(Math.toDegrees(angle2-angle1));
+                double angle2=(Math.asin(y/z2));
+                //r[order1].set_angle(Math.toDegrees(angle2)-Math.toDegrees(angle1)+r[order1].get_angle());
+                //System.out.println(r[order1].get_angle());
                 if(robot_or_obstacle==0)
-                    r[order1].angle_poly(order2,(angle2-angle1)/75);
+                    r[order1].angle_poly(order2,(angle2-angle1));
                 else{
-                    o[order1].angle_poly(order2,(angle2-angle1)/75);
+                    o[order1].angle_poly(order2,(angle2-angle1));
                     m.setObstacle(o);
                 }
                 m.init_field(r,o);

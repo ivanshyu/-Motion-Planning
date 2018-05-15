@@ -17,26 +17,19 @@ public class Planning{
     public void start(Robot r, Map m){
         Queue<Tree> []p = new PriorityQueue[256];
         p[0]=new PriorityQueue();
-        double []holdx0=new double [r.crtl_x(0).length];
-        double []holdy0=new double [r.crtl_y(0).length];
-        double []holdx1=new double [r.crtl_x(1).length];
-        double []holdy1=new double [r.crtl_y(1).length];
-        holdx0=r.crtl_x(0); 
-        holdy0=r.crtl_y(0); 
-        holdx1=r.crtl_x(1); 
-        holdy1=r.crtl_y(1); 
+        
         //System.out.println(m.field[0].length);
-        for(int i=0;i<holdx0.length;i++){
-            Tree a=new Tree((int)holdx0[i],(int)holdy0[i],m.field[0][i][(int)holdx0[i]][(int)holdy0[i]],total_field[(int)holdx0[i]][(int)holdy0[i]]);   //(x position,y position, individual value, total value)
-            p[0].offer(a); 
-        }
+        //for(int i=0;i<holdx0.length;i++){
+        //    Tree a=new Tree((int)holdx0[i],(int)holdy0[i],m.field[0][i][(int)holdx0[i]][(int)holdy0[i]],total_field[(int)holdx0[i]][(int)holdy0[i]]);   //(x position,y position, individual value, total value)
+        //    p[0].offer(a); 
+        //}
         /*Tree a=new Tree(0,0,0,0);
         p[0].offer(a);
         Tree b=new Tree(1,1,1,1);
         p[0].offer(b);
         Tree c=new Tree(2,2,2,2);
         p[0].offer(c);*/
-        System.out.println(((Tree)p[0].peek()).get_total_value());
+        //System.out.println(((Tree)p[0].peek()).get_value());
         
     }
 }
