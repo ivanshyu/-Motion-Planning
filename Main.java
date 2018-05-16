@@ -12,7 +12,7 @@ public class Main extends JComponent implements MouseMotionListener{
     static Robot []r;
     static Obstacle []o;
     static Map m=new Map();
-    static Planning p = new Planning();
+    static Planning p;
     static int rnum,onum;
     static int rpnum,opnum;
     int robot_or_obstacle,order1,order2;
@@ -122,7 +122,7 @@ public class Main extends JComponent implements MouseMotionListener{
                     o[order1].reset_poly(order2,(x-press_x),(press_y-y));
                     m.setObstacle(o);
                 }
-                m.init_field(r,o);
+                m.init_field(r,o,p);
             }
             else if(e.getModifiers()==4){
                 double z1=Math.sqrt(press_x*press_x+press_y*press_y);
@@ -137,8 +137,7 @@ public class Main extends JComponent implements MouseMotionListener{
                     o[order1].angle_poly(order2,(angle2-angle1));
                     m.setObstacle(o);
                 }
-                m.init_field(r,o);
-
+                m.init_field(r,o,p);
             }
         //find=false; 
             repaint();
@@ -168,11 +167,12 @@ public class Main extends JComponent implements MouseMotionListener{
         obs.move_object(o);
 
 
+        p=new Planning(r[0],m);
         m.setObstacle(o);
-        m.init_field(r,o);
-
-        p.addField(m);
-        p.start(r[0],m);
+        m.init_field(r,o,p);
+        
+ //     p.addField(m);
+   //   p.start(r[0],m);
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 

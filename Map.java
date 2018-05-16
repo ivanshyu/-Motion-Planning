@@ -1,5 +1,5 @@
 package data;
-import data.Obstacle;
+import data.*;
 import java.io.*;
 import java.lang.*;
 import java.util.LinkedList;
@@ -7,7 +7,7 @@ import java.util.Queue;
 public class Map{
     private int [][]map;
     public int [][][][]field;
-    public void init_field(Robot []r,Obstacle []o){
+    public void init_field(Robot []r,Obstacle []o,Planning p){
         field=new int [r.length][][][];
         for(int i=0;i<r.length;i++){
             field[i]=new int [r[i].crtl_x(0).length][128][128];  //i for every robot
@@ -19,10 +19,9 @@ public class Map{
                 }
             }
         }
-        for(int i=0;i<r.length;i++) 
-            build_field(i,r[i],o);
+        build_field(0,r[0],o,p);
     }
-    public void build_field(int num, Robot r,Obstacle []o){
+    public void build_field(int num, Robot r,Obstacle []o,Planning p){
         double []holdx=new double[r.crtl_x(1).length];
         double []holdy=new double[r.crtl_y(1).length];
         System.arraycopy( r.crtl_x(1), 0, holdx, 0, holdx.length ); 
@@ -36,7 +35,7 @@ public class Map{
                 y_queue[j] = new LinkedList<Integer>();
             }
             x_queue[0].offer((int)holdx[i]);
-            y_queue[0].offer(128-(int)holdy[i]);
+            y_queue[0].offer((int)holdy[i]);
             for(int value=0;value<253;value++){         //potential field value
                 for(;x_queue[value].peek()!=null;){  //queue[i]!=null
                     int x = x_queue[value].poll();   //x & y are position
@@ -68,6 +67,9 @@ public class Map{
             }
 
         }
+        System.out.println("ok555555555555555!");
+        p.addField();
+        p.start();
     }
     public void printField(){
         for(int i=0;i<field[0].length;i++){
