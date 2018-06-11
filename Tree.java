@@ -16,11 +16,19 @@ public class Tree implements Comparable{
         parent=this;
         visit=false;
     }
+    public Tree(){
+    }
+    public boolean get_visit(){
+        return  visit;
+    }
     public void set_visit(){
         visit=true;
     }
     public void set_parent(Tree t){
         parent=t;
+    }
+    public Tree get_parent(){
+        return parent;
     }
     public int get_value(){
         return value;
@@ -30,6 +38,9 @@ public class Tree implements Comparable{
     }
     public int get_y(){
         return y;
+    }
+    public int get_angle(){
+        return angle;
     }
     @Override
     public int compareTo(Object o) {

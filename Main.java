@@ -212,6 +212,10 @@ public class Main extends JComponent implements MouseMotionListener{
             }
         }
         //m.printField();
+        for(int i=0;i<p.length_of_path();i++){
+            Polygon po = p.paint(i);
+            g.fillPolygon(po);
+        }
     }
 }
 //g.drawLine(-100,-100,0,0);
