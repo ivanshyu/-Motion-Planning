@@ -7,6 +7,7 @@ import java.util.Queue;
 public class Map{
     private int [][]map;
     public int [][][][]field;
+    public int [][][][]all_record;
     public void init_field(Robot []r,Obstacle []o,Planning p){
         field=new int [r.length][][][];
         for(int i=0;i<r.length;i++){
@@ -82,6 +83,9 @@ public class Map{
         }
     }
     public void setObstacle(Obstacle []o){
+        all_record=new int[o.length][][][];
+        for(int i=0;i<o.length;i++)
+            all_record[i]=new int [o[i].pnumber()][1000][2];
         map=new int [128][128];
         for(int i=0;i<128;i++){
             for(int j=0;j<128;j++)
@@ -90,11 +94,11 @@ public class Map{
 
         for(int i=0;i<o.length;i++){
             for(int j=0;j<o[i].pnumber();j++){
-                draw(o[i].poly_x(j),o[i].poly_y(j));
+                draw(o[i].poly_x(j),o[i].poly_y(j),i,j);
             }
         }
     }
-    public void draw(double []x , double []y){  //fill 255 in the obstacles.
+    public void draw(double []x , double []y, int m, int n){  //fill 255 in the obstacles.
         int []org_x=new int[x.length];
         int []org_y=new int[y.length];
         int [][]record=new int[1000][2];
@@ -129,6 +133,12 @@ public class Map{
             }
             //System.out.println(d);
         }
+        //all_record[m][n]=new int[count][2];
+        for(int j=0;j<count;j++){
+            all_record[m][n][j][0]=record[j][0]*5;
+            all_record[m][n][j][1]=640-record[j][1]*5;
+        }
+    
         for(int i=min;i<max;i++){
             int []hold = {0 , 128};
             for(int j=0;j<record.length;j++){

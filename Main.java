@@ -212,6 +212,8 @@ public class Main extends JComponent implements MouseMotionListener{
             }
         }
         //m.printField();
+        g.setColor(new Color(255,0,0,10));
+        
         for(int i=0;i<p.length_of_path();i++){
             Polygon po = p.paint(i);
             g.fillPolygon(po);
